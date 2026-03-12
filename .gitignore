@@ -2,3 +2,4 @@ mujoco_ws/
 ws_ts26_2/build
 ws_ts26_2/install
 ws_ts26_2/log
+**/__pycache__/*
