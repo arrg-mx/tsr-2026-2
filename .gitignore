@@ -2,4 +2,9 @@ mujoco_ws/
 ws_ts26_2/build
 ws_ts26_2/install
 ws_ts26_2/log
+<<<<<<< HEAD
 **/__pycache__/*
+=======
+camera-caps/
+dofbot_drv/
+>>>>>>> 03b820cfa7afc95a0beef77e0ac378610eb362ec
