@@ -24,7 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'telemetry = dofbot_telemetry.Telemetry:main'
+            'telemetry = dofbot_telemetry.Telemetry:main',
+            'telem_sub = dofbot_telemetry.TelemetrySubs:main'
         ],
     },
 )

@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
 import rclpy
+from dofbot_interfaces.msg import Telemetry
 from rclpy.node import Node
-from dofbot_intefaces.msg import Telemetry
+
 
 class TelemetryNode(Node):
     def __init__(self, node_name):
         super().__init__(node_name)
         self._telemetry_pub = self.create_publisher(Telemetry, "/telemetry", 10)
-        self._telemetry_timer  = self.create_timer(1.0, self._on_telemetry_clbk)
+        self._telemetry_timer = self.create_timer(1.0, self._on_telemetry_clbk)
         self.get_logger().info(f"Nodo [{node_name}] inicializado")
 
     def _on_telemetry_clbk(self):
@@ -20,6 +21,7 @@ class TelemetryNode(Node):
 
         self._telemetry_pub.publish(telemetry_msg)
 
+
 def main(args=None):
     try:
         rclpy.init(args=args)
@@ -27,10 +29,10 @@ def main(args=None):
         rclpy.spin(telemetry_node)
     except KeyboardInterrupt as e:
         pass
-    finally:    
+    finally:
         rclpy.shutdown()
 
-if __name__ == "__main__":
-    main() 
 
-   
+if __name__ == "__main__":
+    main()
+
