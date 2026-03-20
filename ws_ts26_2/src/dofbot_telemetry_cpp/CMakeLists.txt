@@ -9,32 +9,21 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(dofbot_interfaces REQUIRED)
 
-set(dependencies
-  rclcpp
-  dofbot_interfaces
-)
-
-include_directories(
-  include
-)
-
-add_executable(telemetry_cpp src/telemetry.cpp)
-ament_target_dependencies(telemetry_cpp ${dependencies})
+# Agrega os puntos de acceso para ejecutar los programas
+# Compilacion/construccion
+add_executable(telemetry_node_pub src/telemetry.cpp)
+ament_target_dependencies(telemetry_node_pub rclcpp dofbot_interfaces)
+# punto de acceso del subscriptor
+add_executable(telemetry_node_sub src/telemetry_subs.cpp)
+ament_target_dependencies(telemetry_node_sub rclcpp dofbot_interfaces)
 
 
+# Asigna la salida del resultado de la construccion a la
+# carpeta de ejecusion
 install(TARGETS
-  #dofbot_telemetry_cpp
-  DESTINATION lib/$(PROJECT_NAME)/
-)
-
-#install (
-#  DIRECTORY dofbot_telemetry_cpp
-#  DESTINATION share/${PROJECT_NAME}
-#)
-
-install (
-  DIRECTORY include/
-  DESTINATION include
+  telemetry_node_pub
+  telemetry_node_sub
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
