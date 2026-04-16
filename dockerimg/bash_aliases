@@ -1,0 +1,3 @@
+#Aliases for the container
+alias srcthis='source ./install/setup.bash'
+alias ros2path='sed "s/:/\n/g" <<< "$AMENT_PREFIX_PATH" | sort | uniq'
