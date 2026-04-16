@@ -5,3 +5,4 @@ ws_ts26_2/log
 **/__pycache__/*
 camera-caps/
 dofbot_drv/
+.vscode/
