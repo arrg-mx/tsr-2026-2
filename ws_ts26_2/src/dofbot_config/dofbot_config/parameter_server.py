@@ -5,6 +5,10 @@ from rclpy.node import Node
 from rclpy.parameter import Parameter
 from rcl_interfaces.msg import ParameterDescriptor, SetParametersResult
 
+import re
+
+IPV4_REGEX = r"^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+
 
 class DofbotParamSrv(Node):
     def __init__(self, node_name):
@@ -57,6 +61,9 @@ class DofbotParamSrv(Node):
         result_msg.reason = "Error en la validación de parametros."
 
         return result_msg
+    
+    def _validate_ip(ip):
+        return bool(re.match(IPV4_REGEX, ip))
 
 def init_srv(args=None):
     rclpy.init(args=args)
