@@ -54,6 +54,10 @@ class DofbotParamSrv(Node):
                 if param.value < 0.0:
                     self.get_logger().warning(f"Parameter {param.name} debe ser mayor o igual a cero.")
                     success = False
+            if param.name == 'robot_ip':
+                success = self._validate_ip(param.value)
+                if not success:
+                    self.get_logger().warning(f"Parameter {param.name} no parece ser una ip valida {param.value}.")
 
         # Generamos el mensaje de resultado del proceso
         result_msg = SetParametersResult()
@@ -62,7 +66,7 @@ class DofbotParamSrv(Node):
 
         return result_msg
     
-    def _validate_ip(ip):
+    def _validate_ip(self, ip):
         return bool(re.match(IPV4_REGEX, ip))
 
 def init_srv(args=None):
