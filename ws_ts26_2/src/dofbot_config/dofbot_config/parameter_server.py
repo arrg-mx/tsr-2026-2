@@ -26,10 +26,11 @@ class DofbotParamSrv(Node):
         self.declare_parameters(
             namespace="",
             parameters=[
-                ('vel_lin', 0.1),
-                ('vel_ang', 0.08),
+                ('vel_lin', 0.0),
+                ('vel_ang', 0.0),
                 ('joint_names', rclpy.Parameter.Type.STRING_ARRAY),
-                ('robot_ip', rclpy.Parameter.Type.STRING)
+                ('robot_ip', rclpy.Parameter.Type.STRING),
+                ('robot_name', rclpy.Parameter.Type.STRING)
             ]
         )
 
