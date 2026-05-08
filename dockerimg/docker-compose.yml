@@ -11,7 +11,7 @@ x-common: &common
   environment:
     - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
     - ROS_DOMAIN_ID=0
-    - export ROBOT_NAME="DOFBOTX"
+    - ROBOT_NAME=$(HOST_ROBOT_NAME)
 
   volumes:
     - /tmp/argus_socket:/tmp/argus_socket
