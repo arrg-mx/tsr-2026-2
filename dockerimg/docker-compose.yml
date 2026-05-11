@@ -10,8 +10,10 @@ x-common: &common
 
   environment:
     - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
-    - ROS_DOMAIN_ID=0
+    - ROS_DOMAIN_ID=10
     - ROBOT_NAME=$(HOST_ROBOT_NAME)
+    - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    - DEV_MODE=true
 
   volumes:
     - /tmp/argus_socket:/tmp/argus_socket
@@ -22,7 +24,7 @@ x-common: &common
     - /var/run/avahi-daemon/socket:/var/run/avahi-daemon/socket
     - /var/run/docker.sock:/var/run/docker.sock
     - /home/arrusr/jetson-containers/data:/data
-    - /home/arrusr/dofbotx:/home/dofbotx
+    - /home/arrusr/dofbotx:/home/robot
     - /etc/localtime:/etc/localtime:ro
     - /etc/timezone:/etc/timezone:ro
 

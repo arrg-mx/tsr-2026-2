@@ -14,7 +14,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 # 2. Instalar las librerias de construccion necesarias a nivel
 # Sistema Operativo (Ubuntu/linux)
 RUN apt-get update && \
-    apt-get install python3-smbus python3-smbus2 i2c-tools -y && \
+    apt-get install python3-pip python3-dev python3-smbus python3-smbus2 i2c-tools -y && \
     rm -rf /var/lib/apt/list/*
     
 # Copiamos el archivo de requerimientos (python)
@@ -41,13 +41,16 @@ WORKDIR /home/robot
 
 # Copiamos el archivo bash_aliases al directorio 
 # del contenedor /home/ubuntu/.bash_aliases
-COPY bash_aliases .bash_aliases
+COPY bash_aliases /home/robot/.bash_aliases
+COPY docker/entrypoint.sh /entrypoint.sh
 
-RUN source ~/.bash_aliases
+RUN sudo chmod +x /entrypoint.sh
 
 # Agregamos dos variables de entorno en el contenedor
 ENV ROS_DOMAIN_ID=10
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+ENV DEV_MODE=true
 
 # Comando por default
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

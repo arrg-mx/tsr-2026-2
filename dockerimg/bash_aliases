@@ -1,3 +1,23 @@
+# Color detection
+if [[ "$TERM" == *"color"* ]]; then
+    COLOR_USER="\[\e[1;32m\]"
+    COLOR_HOST="\[\e[1;34m\]"
+    COLOR_PATH="\[\e[1;36m\]"
+    COLOR_ROS="\[\e[1;35m\]"
+    COLOR_RESET="\[\e[0m\]"
+else
+    COLOR_USER=""
+    COLOR_HOST=""
+    COLOR_PATH=""
+    COLOR_ROS=""
+    COLOR_RESET=""
+fi
+
+CONTAINER_NAME=$(hostname)
+ROS_NAME=${ROS_DISTRO:-"ROS2 Unknown"}
+
+export PS1="\n${COLOR_USER} ╭─╼[\u@${COLOR_HOST}${CONTAINER_NAME}${COLOR_USER}]╾─╼[${COLOR_PATH}\w${COLOR_USER}]${COLOR_RESET}\n${COLOR_ROS} ╰─╼[${ROS_NAME}] \$ ${COLOR_RESET}"
+
 #Aliases for the container
 alias srcthis='source ./install/setup.bash'
 alias ros2path='sed "s/:/\n/g" <<< "$AMENT_PREFIX_PATH" | sort | uniq'
