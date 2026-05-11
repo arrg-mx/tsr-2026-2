@@ -73,8 +73,13 @@ class DofbotParamSrv(Node):
 def init_srv(args=None):
     rclpy.init(args=args)
     param_srv = DofbotParamSrv("dofbot_config")
-    rclpy.spin(param_srv)
-    rclpy.shutdown()
+    try:
+        rclpy.spin(param_srv)
+    except KeyboardInterrupt:
+        param_srv.get_logger().info('Keyboard Interrupt (SIGINT) received. Shutting down...')
+    finally:
+        # param_srv.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == "__main_":
     init_srv()

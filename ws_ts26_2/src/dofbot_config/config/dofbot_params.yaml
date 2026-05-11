@@ -9,8 +9,7 @@
     - arm_joint_05
     - gripper_joint
     robot_ip: 192.168.200.128
-    robot_id: VIRTUAL
-    time_period: 0.01
-    vel_ang: 0.05
-    vel_lin: 0.1
+    robot_name: VIRTUAL
+    vel_ang: 0.01
+    vel_lin: 0.01
 
