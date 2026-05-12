@@ -25,6 +25,10 @@ RUN apt-get update && \
 # requerimientos (python) a nivel global
 # RUN pip3 install --no-cache-dir -r requirements.txt
 
+# COPY docker/entrypoint.sh /entrypoint.sh
+
+# RUN sudo chmod +x /entrypoint.sh
+
 #---------- Stage 2: Runtime ------------
 # Agregamos un usuario local y le asignamos permisos
 # de super usuario para no usar root
@@ -42,15 +46,12 @@ WORKDIR /home/robot
 # Copiamos el archivo bash_aliases al directorio 
 # del contenedor /home/ubuntu/.bash_aliases
 COPY bash_aliases /home/robot/.bash_aliases
-COPY docker/entrypoint.sh /entrypoint.sh
-
-RUN sudo chmod +x /entrypoint.sh
 
 # Agregamos dos variables de entorno en el contenedor
 ENV ROS_DOMAIN_ID=10
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-ENV DEV_MODE=true
+# ENV DEV_MODE=true
 
 # Comando por default
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
