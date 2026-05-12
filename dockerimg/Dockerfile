@@ -14,7 +14,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 # 2. Instalar las librerias de construccion necesarias a nivel
 # Sistema Operativo (Ubuntu/linux)
 RUN apt-get update && \
-    apt-get install python3-pip python3-dev python3-smbus python3-smbus2 i2c-tools -y && \
+    apt-get install python3-pip python3-dev python3-smbus python3-smbus2 python3-pil i2c-tools -y && \
     apt install ros-jazzy-rmw-cyclonedds-cpp -y && \
     rm -rf /var/lib/apt/list/*
     
