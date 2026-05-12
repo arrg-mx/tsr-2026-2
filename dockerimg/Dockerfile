@@ -15,6 +15,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 # Sistema Operativo (Ubuntu/linux)
 RUN apt-get update && \
     apt-get install python3-pip python3-dev python3-smbus python3-smbus2 i2c-tools -y && \
+    apt install ros-jazzy-rmw-cyclonedds-cpp -y && \
     rm -rf /var/lib/apt/list/*
     
 # Copiamos el archivo de requerimientos (python)
@@ -32,24 +33,28 @@ RUN apt-get update && \
 #---------- Stage 2: Runtime ------------
 # Agregamos un usuario local y le asignamos permisos
 # de super usuario para no usar root
-RUN useradd -ms /bin/bash robot && \
-    usermod -aG sudo robot
+#RUN useradd -ms /bin/bash robot && \
+#    usermod -aG sudo robot
 
 # Cambiamos la ejecución al usuario dofbotx
 # Recomendable (opcional)
-USER robot
+# USER robot
+USER ubuntu
 # WORKDIR /home/dofbotx
 # Asignamos el directorio de trabajo del usuario
 # dofbotx
-WORKDIR /home/robot 
+# WORKDIR /home/robot 
+WORKDIR /home/ubuntu 
 
 # Copiamos el archivo bash_aliases al directorio 
 # del contenedor /home/ubuntu/.bash_aliases
-COPY bash_aliases /home/robot/.bash_aliases
+# COPY bash_aliases /home/robot/.bash_aliases
+COPY bash_aliases /home/ubuntu/.bash_aliases
 
 # Agregamos dos variables de entorno en el contenedor
 ENV ROS_DOMAIN_ID=10
-ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+#ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 # ENV DEV_MODE=true
 
 # Comando por default
