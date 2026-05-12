@@ -40,13 +40,15 @@ def generate_launch_description():
     ld = LaunchDescription()
     # robot_name = EnvironmentVariable('ROBOT_NAME', default_value='VIRTUAL')
     robot_name = os.getenv('ROBOT_NAME', 'VIRTUAL')
+    robot_iṕ = os.getenv('IPADDR', '127.0.0.1')
 
     param_srv_node = Node(
         package='dofbot_config',
         executable='param_srv',
         namespace=robot_name.lower(),
         parameters=[{
-            'robot_name': robot_name
+            'robot_name': robot_name, 
+            'robot_ip': robot_iṕ
         }]
     )
 
