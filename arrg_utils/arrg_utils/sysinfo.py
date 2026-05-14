@@ -35,7 +35,7 @@ class SysInfo:
         """
         Initializes the SysInfo instance with system command strings and regex patterns.
         """
-        self.__ip_info = "ihostname -I | awk '{ print $1 }'"  # "ip -j -4 address"
+        self.__ip_info = "hostname -I | awk '{ print $1 }'"  # "ip -j -4 address"
         self.__ip_regex_pattern = (
             r"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$"
         )
