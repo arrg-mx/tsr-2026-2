@@ -9,6 +9,9 @@
 
   <!--Declaracion de dependencias-->
   <depend>dofbot_interfaces</depend>
+  <depend>diagnostic_msgs</depend>
+
+  <exec-depend>diagnostic_msgs</exec-depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

@@ -24,7 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'status_srv = dofbot_services.dofbot_server:init_server'
+            'status_srv = dofbot_services.dofbot_server:init_server',
+            'status_client = dofbot_services.dofbot_client:init_client'
         ],
     },
 )
