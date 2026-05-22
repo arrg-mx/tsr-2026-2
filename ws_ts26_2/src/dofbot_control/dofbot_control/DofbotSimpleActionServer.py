@@ -24,10 +24,10 @@ class DofbotSimpleActionSrv(Node):
 
     def __validate_range(self, value, min_val, max_val, strict=False):
         if strict:
-            if value <= max_val or value >= min_val:
-                False
+            if value <= max_val and value >= min_val:
+                return False
         else:        
-            if value < max_val or value > min_val:
+            if value < max_val and value > min_val:
                 return False
             
         return True    
@@ -45,16 +45,18 @@ class DofbotSimpleActionSrv(Node):
         # Si no cumple con los parámetros se rechaza
         if (self.__validate_range(goal_state, GripperCmd.Goal.OPEN, GripperCmd.Goal.CLOSE)):
             goal_handle.abort()
+            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED.")
             result = GripperCmd.Result()
             result.success = False
-            result.string_status_message = f"ERROR: GRIPPER_STATE {goal_state} debe estar entre {GripperCmd.Goal.CLOSE} y {GripperCmd.Goal.OPEN}."
+            result.string_status_message = f"ERROR: GRIPPER_STATE {goal_state} debe ser menor a {GripperCmd.Goal.CLOSE} y mayor a {GripperCmd.Goal.OPEN}."
             result.current_state = 0.0
             return result
         if (self.__validate_range(goal_duration, 0.0, 10.0) ):
             goal_handle.abort()
+            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED.")
             result = GripperCmd.Result()
             result.success = False
-            result.string_status_message = f"ERROR: DURATION {goal_state} debe estar entre {0.0} y {10.0}."
+            result.string_status_message = f"ERROR: DURATION {goal_duration} debe ser mayor a {0.0} y menor a {10.0}."
             result.current_state = 0.0
             return result
         # 3. Acondicionamos los datos de execusion
@@ -64,19 +66,21 @@ class DofbotSimpleActionSrv(Node):
         igripper_state = -0.7045 # Just for fun
         delta = (goal_state - igripper_state) / int(goal_duration)
         start_time = time.time()
-        
+        self.get_logger().info(f"--> Executing GOAL_ID({str(goal_id)}).")
         while int(time.time() - start_time) < int(goal_duration):
             feedback_msg = GripperCmd.Feedback()
             feedback_msg.current_state = igripper_state
             igripper_state += delta
             goal_handle.publish_feedback(feedback_msg)
+            time.sleep(1.0)
 
         # 3. Terminamos la ejecusion de manera exitosa
+        self.get_logger().info(f"--> Finish GOAL_ID({str(goal_id)}) successfully.")
         goal_handle.succeed()
         result = GripperCmd.Result()
         result.current_state = goal_state
         result.success = True
-        result.string_status_message = "Gripper move succesfully."
+        result.string_status_message = "Gripper move successfully."
         return result
 
         
