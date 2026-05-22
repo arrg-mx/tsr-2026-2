@@ -13,7 +13,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   # Aqui van los archivos de mensaje a generar
   "msg/Telemetry.msg"
   "srv/GetStatus.srv"
-  "action/RobotCommand.action"
+  "action/GripperCmd.action"
 )
 
 ament_export_dependencies(rosidl_default_runtime)
