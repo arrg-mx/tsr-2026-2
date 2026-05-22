@@ -45,7 +45,7 @@ class DofbotSimpleActionSrv(Node):
         # Si no cumple con los parámetros se rechaza
         if (self.__validate_range(goal_state, GripperCmd.Goal.OPEN, GripperCmd.Goal.CLOSE)):
             goal_handle.abort()
-            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED.")
+            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED for 'GRIPPER out of range' rule.")
             result = GripperCmd.Result()
             result.success = False
             result.string_status_message = f"ERROR: GRIPPER_STATE {goal_state} debe ser menor a {GripperCmd.Goal.CLOSE} y mayor a {GripperCmd.Goal.OPEN}."
@@ -53,7 +53,7 @@ class DofbotSimpleActionSrv(Node):
             return result
         if (self.__validate_range(goal_duration, 0.0, 10.0) ):
             goal_handle.abort()
-            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED.")
+            self.get_logger().warn(f"--> GOAL_ID({str(goal_id)}) was ABORTED for 'DURATION out of range' rule.")
             result = GripperCmd.Result()
             result.success = False
             result.string_status_message = f"ERROR: DURATION {goal_duration} debe ser mayor a {0.0} y menor a {10.0}."
