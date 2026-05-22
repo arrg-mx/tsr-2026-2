@@ -3,9 +3,10 @@ import rclpy
 from rclpy.node import Node
 # Importamos la libreria para ActionServer
 from rclpy.action import ActionServer
+from rclpy.action.server import ServerGoalHandle
 # Importamos la libreria personalizada de mensajes (ActionMessage)
 from dofbot_interfaces.action import GripperCmd
-import math
+import uuid
 import time
 
 class DofbotSimpleActionSrv(Node):
@@ -23,20 +24,22 @@ class DofbotSimpleActionSrv(Node):
 
     def __validate_range(self, value, min_val, max_val, strict=False):
         if strict:
-            if value <= min_val or value >= max_val:
+            if value <= max_val or value >= min_val:
                 False
         else:        
-            if value < min_val or value > max_val:
+            if value < max_val or value > min_val:
                 return False
             
         return True    
 
-    def __execute_callback(self, goal_handle):
-        # Regibimos una nueva meta del tipo GripperCmd.Goal
-        self.get_logger().info(f"   Reibimos una nueva GOAL")
+    def __execute_callback(self, goal_handle: ServerGoalHandle):
+        # Recibimos una nueva meta del tipo GripperCmd.Goal
+        goal_id = uuid.UUID(bytes=bytes(goal_handle.goal_id.uuid))
+        self.get_logger().info(f"--> Recibimos una nueva GOAL: GOAL_ID({str(goal_id)})")
         # 1. Recuperamos los datos de la meta
-        goal_state = goal_handle.request.gripper_state
-        goal_duration = goal_handle.request.duration
+        gripper_goal = goal_handle.request
+        goal_state =  gripper_goal.gripper_state
+        goal_duration = gripper_goal.duration
 
         # 2. Evaluamos si la meta es vaida
         # Si no cumple con los parámetros se rechaza
@@ -59,11 +62,13 @@ class DofbotSimpleActionSrv(Node):
         # --------- Just for this demo -------
         # Si el gripper fuera real entonces se lee el valor actual del gripper
         igripper_state = -0.7045 # Just for fun
-        delta = (igripper_state - goal_state) / int(goal_duration)
+        delta = (goal_state - igripper_state) / int(goal_duration)
         start_time = time.time()
-        while (time.time() - start_time) < goal_duration:
+        
+        while int(time.time() - start_time) < int(goal_duration):
             feedback_msg = GripperCmd.Feedback()
-            feedback_msg.current_state = igripper_state + delta
+            feedback_msg.current_state = igripper_state
+            igripper_state += delta
             goal_handle.publish_feedback(feedback_msg)
 
         # 3. Terminamos la ejecusion de manera exitosa
@@ -76,7 +81,15 @@ class DofbotSimpleActionSrv(Node):
 
         
 def init_action_srv(args=None):
-    pass
+    rclpy.init(args=args)
+    simple_actionserver = DofbotSimpleActionSrv('gripper_action_srv_node')
+    try:
+        rclpy.spin(simple_actionserver)
+    except KeyboardInterrupt:
+        simple_actionserver.get_logger().info('Keyboard Interrupt (SIGINT) received. Shutting down...')
+    finally:
+        # simple_actionserver.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == "__main__":
     init_action_srv()

@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'simple_actionserver = dofbot_control.DofbotSimpleActionServer:init_action_srv'
         ],
     },
 )
