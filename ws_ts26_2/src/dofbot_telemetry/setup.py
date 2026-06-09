@@ -26,7 +26,8 @@ setup(
         'console_scripts': [
             'telemetry = dofbot_telemetry.Telemetry:main',
             'telem_sub = dofbot_telemetry.TelemetrySubs:main',
-            'robot_telem = dofbot_telemetry.robot_telem:init_node'
+            'robot_telem = dofbot_telemetry.robot_telem:init_node',
+            'jtop_telem = dofbot_telemetry.jtop_telem:init_node'
         ],
     },
 )
