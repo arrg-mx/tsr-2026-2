@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤖 Dofbot ROS 2 — Workspace `ws_ts26_2`
+# Dofbot ROS 2 — Workspace `ws_ts26_2`
 
 **Universidad Nacional Autónoma de México**  
 **Facultad de Ingeniería**
@@ -41,7 +41,7 @@ arrg_utils/                      → Librería Python: CPU, RAM, disco, red
 dockerimg/                       → Contenedor Docker para Jetson
 ```
 
-> 📌 **Regla de dependencias:** `dofbot_interfaces` debe compilarse **primero** porque todos los demás paquetes usan sus tipos de mensaje.
+>  **Regla de dependencias:** `dofbot_interfaces` debe compilarse **primero** porque todos los demás paquetes usan sus tipos de mensaje.
 
 ---
 
