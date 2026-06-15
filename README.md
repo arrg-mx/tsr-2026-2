@@ -10,7 +10,7 @@
 | **Materia** | Temas Selectos de Robótica |
 | **Área** | Ciencias Físico Matemáticas y de las Ingenierías |
 | **Docentes** | M.I. Erik Peña Medina · Ing. Felipe Rivas Campos |
-| **Alumnos** | López Cruz Marino · Franco Ayala Carlos Alfonso · Mota Vázquez Carlos Emiliano |
+| **Alumnos** | López Cruz Marino · Franco Ayala Carlos Alfonso · Mota Vázquez Carlos Emiliano · Romero Sevilla Miguel Benjamín · Santiago Cruz Plaza · Ortiz Gordillo José Luis Alberto|
 
 </div>
 
