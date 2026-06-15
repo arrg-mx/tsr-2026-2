@@ -25,6 +25,9 @@ RUN apt-get update && \
 # Instalamos las dependencias del archivo de 
 # requerimientos (python) a nivel global
 # RUN pip3 install --no-cache-dir -r requirements.txt
+# RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 setuptools
+RUN pip3 install --break-system-packages -U git+https://github.com/rbonghi/jetson_stats.git
 
 # COPY docker/entrypoint.sh /entrypoint.sh
 
